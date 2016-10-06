@@ -1,4 +1,6 @@
-Recipes = new Meteor.Collection('recipes');
+import {check} from 'meteor/check';
+
+Recipes = new Mongo.Collection('recipes');
 
 RecipeSchema = new SimpleSchema({
   name: {
@@ -11,26 +13,30 @@ RecipeSchema = new SimpleSchema({
   },
   author: {
     type: String,
-    label: "Author",
-    autoValue: function() {
-      this.userId;
-    },
-    autoform: {
-      afFieldInput: { type: "hidden" },
-      afFormGroup: { label: false }
-    }
+    label: "Author"
   },
   createdAt: {
     type: Date,
-    label: "Created At",
-    autoValue: function() {
-      return new Date();
-    },
-    autoform: {
-      afFieldInput: { type: "hidden" },
-      afFormGroup: { label: false }
-    }
+    label: "Created At"
   }
-})
+});
+
+Meteor.methods({
+  'recipe.insert': function(doc) {
+    check(doc, RecipeFormSchema);
+
+    Recipes.insert({
+      name: doc.name,
+      description: doc.description,
+      author: this.userId,
+      createdAt: new Date()
+    });
+  }
+});
 
 Recipes.attachSchema(RecipeSchema);
+
+if(Meteor.isClient) {
+  RecipeFormSchema = RecipeSchema.pick('name', 'description');
+  Template.registerHelper("RecipeFormSchema", RecipeFormSchema);  
+}

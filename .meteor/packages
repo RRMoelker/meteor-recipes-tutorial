@@ -31,6 +31,6 @@ aldeed:autoform               # HTML Form generation from collection2 schema
 accounts-ui
 accounts-password
 matb33:bootstrap-glyphicons
-msavin:jetsetter
 zimme:active-route
 gwendall:auth-client-callbacks
+meteortoys:allthings          # Debug tools, use ctrl-m to show

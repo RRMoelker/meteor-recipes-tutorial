@@ -1,9 +1,10 @@
 <template name="NewRecipe">
   <div class="new-recipe-container">
     {{> quickForm
-    collection="Recipes"
+    schema="RecipeFormSchema"
     id="insertRecipeForm"
-    type="insert"
+    type="method"
+    meteormethod="recipe.insert"
     class="new-recipe-form"}}
   </div>
 </template>
