@@ -7,11 +7,11 @@ FlowRouter.route('/', {
 });
 
 
-FlowRouter.route('/test', {
-  name: 'test',
+FlowRouter.route('/recipes', {
+  name: 'recipe-list',
   action() {
     BlazeLayout.render('MainLayout', {
-      main: 'test'
+      main: 'Recipes'
     });
   }
 });
