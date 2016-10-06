@@ -27,7 +27,7 @@ spiderable
 fastclick
 raix:handlebar-helpers        # Session variables in templates
 aldeed:collection2            # Schema based data
-aldeed:autoform
+aldeed:autoform               # HTML Form generation from collection2 schema
 accounts-ui
 accounts-password
 matb33:bootstrap-glyphicons
