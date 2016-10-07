@@ -7,4 +7,7 @@ Variation of video series: https://youtu.be/BvkQNTIfbQk?list=PLLnpHn493BHFYZUSK6
 `meteor run`
 
 # Differences with tutorial
-* using imports folder so no auto loading of JS, using ES2015 imports.
+* Occasionaly using imports folder so no auto loading of JS, using ES2015 imports.
+* Skipped recipe update flow
+* Skipped session helpers, reactive vars
+* Skipped new recipe collapse/expand button
