@@ -3,6 +3,9 @@ Recipes = new Mongo.Collection('recipes');
 Recipes.allow({
   insert: function(userId, doc) {
     return !!userId;
+  },
+  update: function(userId, doc) {
+    return !!userId;
   }
 })
 
@@ -33,7 +36,8 @@ RecipeSchema = new SimpleSchema({
     defaultValue: false,
     optional: true,
     autoform: {
-      afFieldInput: { type: "hidden" }
+      afFieldInput: { type: "hidden" },
+      afFormGroup: { label: false }
     }
   },
   author: {
@@ -57,6 +61,16 @@ RecipeSchema = new SimpleSchema({
       afFieldInput: { type: "hidden" },
       afFormGroup: { label: false }
   }
+  }
+})
+
+Meteor.methods({
+  toggleMenuItem: function (id, currentState) {
+    Recipes.update(id, {
+      $set: {
+        inMenu: !currentState
+      }
+    })
   }
 })
 
