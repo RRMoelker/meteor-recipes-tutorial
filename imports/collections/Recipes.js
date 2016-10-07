@@ -1,6 +1,20 @@
-import {check} from 'meteor/check';
-
 Recipes = new Mongo.Collection('recipes');
+
+Recipes.allow({
+  insert: function(userId, doc) {
+    return !!userId;
+  }
+})
+
+IngredientScheme = new SimpleSchema({
+  name: {
+    type: String,
+    label: "name"
+  },
+  amount: {
+    type: String
+  }
+})
 
 RecipeSchema = new SimpleSchema({
   name: {
@@ -11,32 +25,39 @@ RecipeSchema = new SimpleSchema({
     type: String,
     label: "Description"
   },
+  ingredients: {
+    type: [IngredientScheme]
+  },
+  inMenu: {
+    type: Boolean,
+    defaultValue: false,
+    optional: true,
+    autoform: {
+      afFieldInput: { type: "hidden" }
+    }
+  },
   author: {
     type: String,
-    label: "Author"
+    label: "Author",
+    autoValue: function() {
+      return this.userId;
+    },
+    autoform: {
+      afFieldInput: { type: "hidden" },
+      afFormGroup: { label: false }
+    }
   },
   createdAt: {
     type: Date,
-    label: "Created At"
+    label: "Created At",
+    autoValue: function() {
+      return new Date();
+    },
+    autoform: {
+      afFieldInput: { type: "hidden" },
+      afFormGroup: { label: false }
   }
-});
-
-Meteor.methods({
-  'recipe.insert': function(doc) {
-    check(doc, RecipeFormSchema);
-
-    Recipes.insert({
-      name: doc.name,
-      description: doc.description,
-      author: this.userId,
-      createdAt: new Date()
-    });
   }
-});
+})
 
 Recipes.attachSchema(RecipeSchema);
-
-if(Meteor.isClient) {
-  RecipeFormSchema = RecipeSchema.pick('name', 'description');
-  Template.registerHelper("RecipeFormSchema", RecipeFormSchema);  
-}
